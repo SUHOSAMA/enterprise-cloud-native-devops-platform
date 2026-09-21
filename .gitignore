@@ -49,3 +49,4 @@ jenkins_home/
 # Generated files
 dist/
 build/
+terraform/tfplan
