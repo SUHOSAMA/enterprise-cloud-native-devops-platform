@@ -13,10 +13,11 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running application tests...'
+
                 sh '''
-                    python --version
-                    pip install -r application/requirements.txt
-                    pip install pytest
+                    python3 --version
+                    pip3 install --break-system-packages -r application/requirements.txt
+                    pip3 install --break-system-packages pytest
                     pytest application/tests -v
                 '''
             }
@@ -25,6 +26,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
+
                 sh '''
                     docker build -t enterprise-cloud-native-devops-platform:${BUILD_NUMBER} .
                 '''
@@ -42,9 +44,11 @@ pipeline {
         success {
             echo 'Enterprise Cloud-Native DevOps pipeline completed successfully.'
         }
+
         failure {
             echo 'Pipeline failed. Check the Jenkins console output.'
         }
+
         always {
             echo "Build Number: ${BUILD_NUMBER}"
         }
