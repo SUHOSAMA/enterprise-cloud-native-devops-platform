@@ -15,10 +15,13 @@ pipeline {
                 echo 'Running application tests...'
 
                 sh '''
+                    cd application
+
                     python3 --version
-                    pip3 install --break-system-packages -r application/requirements.txt
+                    pip3 install --break-system-packages -r requirements.txt
                     pip3 install --break-system-packages pytest
-                    python3 -m pytest application/tests -v
+
+                    python3 -m pytest tests -v
                 '''
             }
         }
@@ -28,7 +31,7 @@ pipeline {
                 echo 'Building Docker image...'
 
                 sh '''
-                    docker build -t enterprise-cloud-native-devops-platform:${BUILD_NUMBER} .
+                    docker build -f docker/Dockerfile -t enterprise-cloud-native-devops-platform:${BUILD_NUMBER} .
                 '''
             }
         }
